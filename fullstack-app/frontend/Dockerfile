@@ -1,23 +1,20 @@
-# Use Node.js as base
+# Use Node.js 18 as the base image
 FROM node:18
 
-# Set working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and install dependencies
+# Copy package.json and package-lock.json first (for better caching)
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
-# Copy everything and build the app
+# Copy the rest of the application code
 COPY . .
-RUN npm run build
 
-# Use Nginx to serve the build files
-FROM nginx:alpine
-COPY --from=0 /app/build /usr/share/nginx/html
-
-# Expose port 3000
+# Expose the port that React runs on
 EXPOSE 3000
 
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start the React development server
+CMD ["npm", "start"]

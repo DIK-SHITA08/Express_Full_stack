@@ -7,8 +7,8 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install dependencies (force clean install)
+RUN npm install && npm install cors
 
 # Copy the entire application code
 COPY . .

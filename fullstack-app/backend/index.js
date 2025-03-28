@@ -1,9 +1,15 @@
-const express = require('express');
+const express = require("express");
+const cors = require("cors");
+
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send('Hello from Backend!');
+// Enable CORS to allow frontend to access backend
+app.use(cors());
+
+app.get("/", (req, res) => {
+  res.send("Hello from Backend!");
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Set PORT to 5000 and listen on 0.0.0.0
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, "0.0.0.0", () => console.log(`Server running on port ${PORT}`));

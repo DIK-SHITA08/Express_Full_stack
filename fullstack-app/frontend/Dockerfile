@@ -1,26 +1,23 @@
-# Use the official Node.js 18 image as the base image
-FROM node:18  
+# Use Node.js as the base image
+FROM node:18
 
-# Set the working directory inside the container
-WORKDIR /app  
+# Set the working directory
+WORKDIR /app
 
-# Copy package.json and package-lock.json first (to leverage Docker caching)
-COPY package*.json ./  
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-# Install application dependencies
-RUN npm install  
+# Install dependencies
+RUN npm install
 
-# Copy the entire application code into the container
-COPY . .  
+# Copy the entire application (assuming index.js and other files are in the root)
+COPY . .
 
-# Build the frontend app (for React or Angular)
-RUN npm run build  
+# Build the React app
+RUN npm run build
 
-# Install a lightweight web server for serving static files
-RUN npm install -g serve  
+# Expose port 3000
+EXPOSE 3000
 
-# Expose port 3000 for the application
-EXPOSE 3000  
-
-# Serve the frontend app
-CMD ["serve", "-s", "build", "-l", "3000"]
+# Serve the built React app
+CMD ["npx", "serve", "-s", "build", "-l", "3000"]

@@ -1,18 +1,20 @@
+# Use Node.js as the base image
 FROM node:18
 
-WORKDIR /app  
+# Set the working directory
+WORKDIR /app
 
-# Copy package.json first
-COPY package*.json ./  
-RUN npm install  
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-# Copy all files (ensure index.js is included)
-COPY . .  
+# Install dependencies
+RUN npm install
 
-# List files to confirm index.js is there
-RUN ls -l /app  
+# Copy the entire application code
+COPY . .
 
-EXPOSE 5000  
+# Expose the backend port
+EXPOSE 5000
 
-# Update CMD to use index.js
+# Start the backend server
 CMD ["node", "index.js"]

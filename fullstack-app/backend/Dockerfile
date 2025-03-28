@@ -13,4 +13,4 @@ COPY . .
 RUN ls -l /app  
 
 EXPOSE 5000  
-CMD ["node", "server.js"]
+CMD ["node", "index.js"]

@@ -1,23 +1,23 @@
-# Use Node.js as the base image
+# Use Node.js as base
 FROM node:18
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package.json and install dependencies
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
 
-# Copy the entire application (assuming index.js and other files are in the root)
+# Copy everything and build the app
 COPY . .
-
-# Build the React app
 RUN npm run build
+
+# Use Nginx to serve the build files
+FROM nginx:alpine
+COPY --from=0 /app/build /usr/share/nginx/html
 
 # Expose port 3000
 EXPOSE 3000
 
-# Serve the built React app
-CMD ["npx", "serve", "-s", "build", "-l", "3000"]
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]

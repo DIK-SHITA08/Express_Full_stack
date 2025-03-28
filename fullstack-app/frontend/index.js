@@ -5,7 +5,7 @@ function App() {
   const [message, setMessage] = useState("Loading...");
 
   useEffect(() => {
-    fetch("http://localhost:5000")
+    fetch("http://backend-container:5000")
       .then((res) => res.text())
       .then((data) => setMessage(data))
       .catch((err) => console.error("Error fetching backend:", err));

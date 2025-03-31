@@ -1,26 +1,29 @@
-# Use Node.js as the base image
-FROM node:18
+# Use official Node.js image
+FROM node:18-alpine
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+# Copy package.json and package-lock.json first
+COPY package.json package-lock.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy the entire project
-COPY . .
+# Copy everything to the container
+COPY . . 
+
+# Debugging: List files inside /app before build
+RUN ls -l /app/public/
 
 # Build the React app
 RUN npm run build
 
-# Install "serve" globally to serve the frontend
+# Install "serve" to serve the frontend
 RUN npm install -g serve
+
+# Serve the built React app
+CMD ["serve", "-s", "build", "-l", "3000"]
 
 # Expose port 3000
 EXPOSE 3000
-
-# Run the React app using "serve"
-CMD ["serve", "-s", "build", "-l", "3000"]

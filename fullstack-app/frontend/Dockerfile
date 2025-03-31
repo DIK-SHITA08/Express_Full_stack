@@ -13,8 +13,15 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
-# Expose the port that React runs on
+# Build the React app for production
+RUN npm run build
+
+# Install a lightweight static file server
+RUN npm install -g serve
+
+# Expose the port the React app will run on
 EXPOSE 3000
 
-# Start the React development server
-CMD ["npm", "start"]
+# Start the React app using 'serve'
+CMD ["serve", "-s", "build", "-l", "3000"]
+

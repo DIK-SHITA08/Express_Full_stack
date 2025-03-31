@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
 
 function App() {
   const [message, setMessage] = useState("Loading...");
 
   useEffect(() => {
-    fetch("http://backend-container:5000")
+    fetch("http://localhost:5000")
       .then((res) => res.text())
       .then((data) => setMessage(data))
       .catch((err) => console.error("Error fetching backend:", err));
@@ -19,4 +18,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+export default App;

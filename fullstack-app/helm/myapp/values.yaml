@@ -1,0 +1,14 @@
+
+frontend:
+  image: your-dockerhub-username/frontend:latest
+  replicaCount: 2
+  service:
+    type: LoadBalancer
+    port: 80
+
+backend:
+  image: your-dockerhub-username/backend:latest
+  replicaCount: 2
+  service:
+    type: ClusterIP
+    port: 8080
